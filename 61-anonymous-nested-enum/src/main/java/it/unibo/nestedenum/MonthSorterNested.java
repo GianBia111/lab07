@@ -42,14 +42,19 @@ public final class MonthSorterNested implements MonthSorter {
         }
 
         public final static Month fromString(String s_month){
-            Month guessed;
+            Month guessed=null;
             for(final Month m : values()){
                 if(s_month==m.toString() || m.toString().toLowerCase(Locale.ROOT).startsWith(s_month.toLowerCase(Locale.ROOT))){
-                    return guessed;
+                    if(guessed!=null)
+                        throw new IllegalMonthNameException("Il nome che hai passato è ambiguo, sono statri trovati piu' di un match");
+                    else
+                        guessed=m;
                 }
             }
-            throw new IllegalMonthNameException("Il nome che hai passato non match in alcun modo con nessun nome del mese");
-            return null;
+            if(guessed==null)
+                throw new IllegalMonthNameException("Il nome che hai passato non match in alcun modo con nessun nome del mese");
+
+            return guessed;
         }
     }
 
