@@ -23,7 +23,13 @@ public interface Function<I, O> {
      * @param <T> the input (and output) type of the function
      */
     static <T> Function<T, T> identity() {
-        return null;
+        /**Create the anonimus class that overrides the method 'call' and returns the same input given to the function */
+        return new Function<T, T>(){
+            @Override
+            public T call(final T param){
+                return param;
+            }
+        };
     }
 
 }
